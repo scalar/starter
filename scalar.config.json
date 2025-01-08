@@ -1,0 +1,16 @@
+{
+  "$schema": "https://cdn.scalar.com/schema/scalar-config.json",
+  "subdomain": "my-subdomain",
+  "guides": [
+    {
+      "name": "My Documentation Site",
+      "sidebar": [
+        {
+          "path": "docs/introduction.md",
+          "type": "page"
+        }
+      ]
+    }
+  ],
+  "references": []
+}
