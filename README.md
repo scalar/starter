@@ -27,9 +27,8 @@ This will verify that your `scalar.config.json` file contains valid settings and
 ```
 starter/
 ├── docs/
-│   └── api-reference/      # OpenAPI documents
-├── guides/                 # Free-form text
-│   └── quick-start/        # Getting started materials
+│   ├── api-reference/      # OpenAPI documents
+│   └── guides/             # Free-form text
 ├── scalar.config.json      # Configuration
 ```
 

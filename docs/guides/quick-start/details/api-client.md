@@ -1,9 +1,6 @@
 # API Client
 
-Make use of an auto-generated, full featured,
-& [open-source](https://github.com/scalar/scalar) API client - built by us + our community - by including
-**OpenAPI** spec files or references within the `references` section of your
-project's `scalar.config.json5` file!
+Make use of an auto-generated, full featured & [open-source](https://github.com/scalar/scalar) API client - built by us + our community - by including **OpenAPI** documents or references within the `references` section of your project's `scalar.config.json5` file!
 
 ## Features
 

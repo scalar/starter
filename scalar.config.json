@@ -1,8 +1,8 @@
 {
   "references": [
     {
-      "name": "Planets",
-      "path": "./docs/api-reference/open-api-spec.yaml"
+      "name": "API Reference",
+      "path": "./docs/api-reference/openapi.yaml"
     }
   ],
   "guides": [
@@ -14,9 +14,9 @@
           "type": "folder",
           "icon": "rocket",
           "children": [
-            { "path": "guides/quick-start/introduction.md", "type": "page", "name": "Overview" },
-            { "path": "guides/quick-start/details/quickstart.md", "type": "page", "name": "Quickstart" },
-            { "path": "guides/quick-start/details/development.md", "type": "page", "name": "Development" }
+            { "path": "docs/guides/quick-start/introduction.md", "type": "page", "name": "Overview" },
+            { "path": "docs/guides/quick-start/details/quickstart.md", "type": "page", "name": "Quickstart" },
+            { "path": "docs/guides/quick-start/details/development.md", "type": "page", "name": "Development" }
           ]
         },
         {
@@ -24,8 +24,8 @@
           "type": "folder",
           "icon": "gear",
           "children": [
-            { "path": "guides/quick-start/details/project-settings.md", "type": "page", "name": "Project Settings" },
-            { "path": "guides/quick-start/details/api-specs.md", "type": "page", "name": "API Specs" }
+            { "path": "docs/guides/quick-start/details/project-settings.md", "type": "page", "name": "Project Settings" },
+            { "path": "docs/guides/quick-start/details/api-client.md", "type": "page", "name": "API Client" }
           ]
         },
         {
@@ -34,8 +34,8 @@
           "icon": "notebook",
           "defaultOpen": false,
           "children": [
-            { "path": "guides/quick-start/details/cli-install.md", "type": "page", "name": "CLI" },
-            { "path": "guides/quick-start/details/syntax.md", "type": "page", "name": "Syntax" }
+            { "path": "docs/guides/quick-start/details/scalar-cli.md", "type": "page", "name": "Scalar CLI" },
+            { "path": "docs/guides/quick-start/details/syntax.md", "type": "page", "name": "Syntax" }
           ]
         }
       ]
@@ -46,7 +46,6 @@
     "logo": {
       "darkMode": "https://scalar.com/logo-light.svg",
       "lightMode": "https://scalar.com/logo-dark.svg"
-    },
-    "headScript": "(function() { const script = document.createElement('script'); script.src = 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js'; script.onload = function() { console.log('Lodash loaded!', _.VERSION); }; document.head.appendChild(script); })()"
+    }
   }
 }
