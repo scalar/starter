@@ -10,7 +10,7 @@ npm -g install @scalar/cli
 ```
 </scalar-step>
 <scalar-step title="Or, run without install">
-If you prefer not to install the cli, just prefix all commands with `npx @scalar/cli` instead of scalar.
+If you prefer not to install the cli, just prefix all commands with `npx @scalar/cli` instead of `scalar`.
 </scalar-step>
 </scalar-steps>
 
@@ -32,7 +32,7 @@ EOF
 </scalar-step>
 <scalar-step title="Start the local preview server">
 ```sh
-@scalar/cli project preview
+npx @scalar/cli project preview
 ```
 </scalar-step>
 </scalar-steps>
@@ -46,9 +46,9 @@ Add an entry to your `guides` section of the `scalar.config.json5`.
 This can be as simple as:
 
 ```json
-{ 
-  "name": "Guide Name", 
-  "sidebar":[ 
+{
+  "name": "Guide Name",
+  "sidebar":[
     {
       name: "Guide entry name",
       type: "page",
@@ -65,19 +65,19 @@ Before we can publish we need to authorize!
 This command will redirect you to your browser to log in
 :::
 ```sh
-@scalar/cli auth login
+npx @scalar/cli auth login
 ```
 After logging in we can create a project. You'll need to pass a `name` and `slug`.
 
 ```sh
-@scalar/cli project create --name your-preferred-project-name \
+npx @scalar/cli project create --name your-preferred-project-name \
 --slug costasiella-kuroshimae
 ```
 </scalar-step>
 
 <scalar-step title="Publish your site">
 ```sh
-@scalar/cli project publish
+npx @scalar/cli project publish
 ```
 
 </scalar-step>
