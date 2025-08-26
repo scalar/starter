@@ -36,4 +36,4 @@ Don't stress your engineering team out, our API Client is built all based on the
 </scalar-row>
 
 
-::scalar-page-link{filepath="guides/quick-start/introduction.md" title="Take me back" description="Return to the Overview."}
+::scalar-page-link{filepath="docs/guides/quick-start/introduction.md" title="Take me back" description="Return to the Overview."}
