@@ -1,5 +1,10 @@
 # Scalar Docs Starter Kit
 
+[![Contributors](https://img.shields.io/github/contributors/scalar/starter)](https://github.com/scalar/starter/graphs/contributors)
+[![GitHub License](https://img.shields.io/github/license/scalar/starter)](https://github.com/scalar/starter/blob/main/LICENSE)
+[![Twitter](https://img.shields.io/twitter/follow/scalar)](https://x.com/scalar)
+[![Discord](https://img.shields.io/discord/1135330207960678410?style=flat&color=5865F2)](https://discord.gg/scalar)
+
 Welcome to the Scalar Docs starter kit! This project provides you with a complete foundation to create beautiful, interactive API documentation using Scalar's powerful documentation platform.
 
 ## Preview
