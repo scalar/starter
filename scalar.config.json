@@ -1,10 +1,12 @@
 {
-  "references": [
-    {
-      "name": "API Reference",
-      "path": "./docs/api-reference/openapi.yaml"
+  "$schema": "https://cdn.scalar.com/schema/scalar-config.json",
+  "siteConfig": {
+    "theme": "purple",
+    "logo": {
+      "darkMode": "https://scalar.com/logo-light.svg",
+      "lightMode": "https://scalar.com/logo-dark.svg"
     }
-  ],
+  },
   "guides": [
     {
       "name": "Quick Start",
@@ -41,11 +43,10 @@
       ]
     }
   ],
-  "siteConfig": {
-    "theme": "purple",
-    "logo": {
-      "darkMode": "https://scalar.com/logo-light.svg",
-      "lightMode": "https://scalar.com/logo-dark.svg"
+  "references": [
+    {
+      "name": "API Reference",
+      "path": "./docs/api-reference/openapi.yaml"
     }
-  }
+  ]
 }
