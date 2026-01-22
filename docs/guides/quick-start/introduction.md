@@ -1,33 +1,33 @@
-# Introduction
+# Quickstart
 
-Welcome to Scalar!
+This is the Scalar Docs Starter Kit — a ready-to-use template for building beautiful documentation. Fork it, clone it, and make it your own. Everything here is meant to be modified, extended, or replaced to fit your project.
 
-## Getting Ready
-::scalar-page-link{filepath="docs/guides/quick-start/details/quickstart.md" title="Start here" description="Follow the quickstart guide."}
+## 1. Preview Your Docs
 
-## Your Docs, Your Way
-Three steps to beautiful docs.
+Run a local development server to see your changes in real-time:
 
-<scalar-steps>
+```bash
+npx @scalar/cli project preview
+```
 
-:::scalar-step{title="Iterate locally" interactivity="none"}
-:scalar-icon{src="pencil-simple"} Edit your docs and watch them update in real time.
-::scalar-page-link{filepath="docs/guides/quick-start/details/development.md" title="Live Previewing" description="Use the cli for local development."}
-:::
+This starts a live preview at `http://localhost:7971` where every edit you make is instantly visible.
 
-:::scalar-step{title="Add API refs" interactivity="none"}
-:scalar-icon{src="files"} Include OpenAPI references.
-::scalar-page-link{filepath="docs/guides/quick-start/details/api-client.md" title="API Client" description="Auto-generate an API client from your OpenAPI spec."}
-:::
+## 2. Include OpenAPI Documents
 
-:::scalar-step{title="Make it yours" interactivity="none"}
-:scalar-icon{src="dna"} Write interactive docs and set themes with ease.
-::scalar-page-link{filepath="docs/guides/quick-start/details/syntax.md" title="Extended Markdown syntax" description="See all the ways you can write your docs with our custom syntax."}
-:::
-</scalar-steps>
+Drop your OpenAPI files into `docs/api-reference/`, and add them to `@scalar.config.json` to have them automatically become interactive API references.
 
+The starter kit includes an example OpenAPI document to show you how it works.
 
-## Diving In
-power of directives
-code samples
-images
+## 3. Customize Everything
+
+Make it yours with themes, custom CSS, and MDX. Configure your documentation structure, navigation, and styling through `scalar.config.json`.
+
+## Stuck?
+
+Check whether your `scalar.config.json` is valid:
+
+```bash
+npx @scalar/cli project check-config
+```
+
+And [reach out to our support team](mailto:support@scalar.com), we're here to help.
