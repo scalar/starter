@@ -7,8 +7,8 @@
   },
   "siteConfig": {
     "logo": {
-      "darkMode": "https://scalar.com/logo-light.svg",
-      "lightMode": "https://scalar.com/logo-dark.svg"
+      "darkMode": "https://cdn.scalar.com/marketing/landing/logo-dark.svg",
+      "lightMode": "https://cdn.scalar.com/marketing/landing/logo-light.svg"
     }
   },
   "navigation": {
@@ -17,7 +17,7 @@
         "type": "group",
         "title": "Quick Start",
         "children": {
-          "": {
+          "/": {
             "type": "page",
             "filepath": "docs/guides/quick-start/introduction.md",
             "title": "Overview",
