@@ -19,70 +19,33 @@
         "children": {
           "/": {
             "type": "page",
-            "filepath": "docs/guides/quick-start/introduction.md",
-            "title": "Overview",
-            "icon": "phosphor/regular/house"
+            "filepath": "docs/content/quickstart.md",
+            "title": "Quickstart",
+            "icon": "phosphor/regular/fast-forward"
           },
-          "/getting-started": {
-            "type": "group",
-            "title": "Getting Started with Scalar",
-            "mode": "nested",
-            "icon": "phosphor/regular/rocket",
-            "children": {
-              "quickstart": {
-                "type": "page",
-                "filepath": "docs/guides/quick-start/details/quickstart.md",
-                "title": "Quickstart"
-              },
-              "development": {
-                "type": "page",
-                "filepath": "docs/guides/quick-start/details/development.md",
-                "title": "Development"
-              }
-            }
+          "/configuration": {
+            "type": "page",
+            "filepath": "docs/content/configuration.md",
+            "title": "Configuration",
+            "icon": "phosphor/regular/gear"
           },
-          "/customizing": {
-            "type": "group",
-            "title": "Customizing Your Setup",
-            "mode": "nested",
-            "icon": "phosphor/regular/gear",
-            "children": {
-              "project-settings": {
-                "type": "page",
-                "filepath": "docs/guides/quick-start/details/project-settings.md",
-                "title": "Project Settings"
-              },
-              "api-client": {
-                "type": "page",
-                "filepath": "docs/guides/quick-start/details/api-client.md",
-                "title": "API Client"
-              }
-            }
-          },
-          "/appendix": {
-            "type": "group",
-            "title": "Appendix",
-            "mode": "nested",
-            "icon": "phosphor/regular/notebook",
-            "children": {
-              "scalar-cli": {
-                "type": "page",
-                "filepath": "docs/guides/quick-start/details/scalar-cli.md",
-                "title": "Scalar CLI"
-              },
-              "syntax": {
-                "type": "page",
-                "filepath": "docs/guides/quick-start/details/syntax.md",
-                "title": "Syntax"
-              }
-            }
+          "/development": {
+            "type": "page",
+            "filepath": "docs/content/development.md",
+            "title": "Development",
+            "icon": "phosphor/regular/code"
           },
           "/api-reference": {
+            "type": "page",
+            "filepath": "docs/content/api-reference.md",
+            "title": "API Reference",
+            "icon": "phosphor/regular/notebook"
+          },
+          "/api": {
             "type": "openapi",
             "filepath": "docs/api-reference/openapi.yaml",
-            "title": "API Reference",
-            "icon": "phosphor/regular/notebook",
-            "mode": "nested"
+            "title": "Example API",
+            "icon": "phosphor/regular/plug"
           }
         }
       }

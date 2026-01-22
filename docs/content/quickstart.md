@@ -22,6 +22,22 @@ The starter kit includes an example OpenAPI document to show you how it works.
 
 Make it yours with themes, custom CSS, and MDX. Configure your documentation structure, navigation, and styling through `scalar.config.json`.
 
+## 4. Publish Your Docs
+
+First, authenticate with your Scalar account:
+
+```bash
+npx @scalar/cli auth login
+```
+
+Then publish your documentation:
+
+```bash
+npx @scalar/cli project publish
+```
+
+Your site will be available at `<your-slug>.apidocumentation.com`.
+
 ## Stuck?
 
 Check whether your `scalar.config.json` is valid:
@@ -30,4 +46,8 @@ Check whether your `scalar.config.json` is valid:
 npx @scalar/cli project check-config
 ```
 
-And [reach out to our support team](mailto:support@scalar.com), we're here to help.
+We're here to help:
+
+- [Email support@scalar.com](mailto:support@scalar.com)
+- [Chat with us on Discord](https://discord.gg/scalar)
+- [Schedule a call](https://scalar.cal.com/scalar/chat-with-scalar)
