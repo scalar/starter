@@ -1,4 +1,4 @@
-# API Reference
+# API References
 
 Scalar supports three ways to add OpenAPI documents to your documentation: using a local file, the [Scalar Registry](https://scalar.com/products/registry/getting-started) or a remote URL.
 

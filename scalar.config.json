@@ -2,8 +2,8 @@
   "$schema": "https://cdn.scalar.com/schema/scalar-config-next.json",
   "scalar": "2.0.0",
   "info": {
-    "title": "Quick Start",
-    "description": "Getting started with Scalar"
+    "title": "Scalar Starter Kit",
+    "description": "Get Started with the Scalar Docs"
   },
   "siteConfig": {
     "logo": {
@@ -15,7 +15,7 @@
     "routes": {
       "/": {
         "type": "group",
-        "title": "Quick Start",
+        "title": "Scalar Starter Kit",
         "children": {
           "/": {
             "type": "page",
@@ -23,29 +23,43 @@
             "title": "Quickstart",
             "icon": "phosphor/regular/fast-forward"
           },
-          "/configuration": {
-            "type": "page",
-            "filepath": "docs/content/configuration.md",
-            "title": "Configuration",
-            "icon": "phosphor/regular/gear"
+          "/usage": {
+            "type": "group",
+            "title": "Usage",
+            "mode": "flat",
+            "children": {
+              "/development": {
+                "type": "page",
+                "filepath": "docs/content/development.md",
+                "title": "Development",
+                "icon": "phosphor/regular/code"
+              },
+              "/api-references": {
+                "type": "page",
+                "filepath": "docs/content/api-references.md",
+                "title": "API References",
+                "icon": "phosphor/regular/notebook"
+              },
+              "/documentation": {
+                "title": "Full Documentation",
+                "icon": "phosphor/regular/book",
+                "url": "https://scalar.com/products/docs/getting-started",
+                "type": "link"
+              }
+            }
           },
-          "/development": {
-            "type": "page",
-            "filepath": "docs/content/development.md",
-            "title": "Development",
-            "icon": "phosphor/regular/code"
-          },
-          "/api-reference": {
-            "type": "page",
-            "filepath": "docs/content/api-reference.md",
-            "title": "API Reference",
-            "icon": "phosphor/regular/notebook"
-          },
-          "/api": {
-            "type": "openapi",
-            "filepath": "docs/api-reference/openapi.yaml",
-            "title": "Example API",
-            "icon": "phosphor/regular/plug"
+          "/examples": {
+            "type": "group",
+            "title": "Examples",
+            "mode": "flat",
+            "children": {
+              "/api": {
+                "type": "openapi",
+                "filepath": "docs/api-reference/openapi.yaml",
+                "title": "Example API",
+                "icon": "phosphor/regular/plug"
+              }
+            }
           }
         }
       }
