@@ -5,11 +5,11 @@
 [![Twitter](https://img.shields.io/twitter/follow/scalar)](https://x.com/scalar)
 [![Discord](https://img.shields.io/discord/1135330207960678410?style=flat&color=5865F2)](https://discord.gg/scalar)
 
-Welcome to the Scalar Docs starter kit! This project provides you with a complete foundation to create beautiful, interactive API documentation using Scalar's powerful documentation platform.
+Welcome to the Scalar Docs Starter Kit! Deploy Markdown and OpenAPI documents from GitHub.
 
 ## Preview
 
-Use the Scalar CLI to render a live preview of your project locally:
+Use the [Scalar CLI](https://scalar.com/tools/cli/getting-started) to render a live preview of your project locally:
 
 ```bash
 npx @scalar/cli project preview
@@ -26,6 +26,10 @@ npx @scalar/cli project check-config
 ```
 
 This will verify that your `scalar.config.json` file contains valid settings and help identify any configuration issues.
+
+### GitHub Action
+
+This repository includes a GitHub Action workflow that automatically validates the configuration on every push and pull request. See [`.github/workflows/validate-scalar-configuration.yml`](./.github/workflows/validate-scalar-configuration.yml).
 
 ## Project Structure
 

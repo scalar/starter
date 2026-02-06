@@ -1,52 +1,68 @@
 {
-  "$schema": "https://cdn.scalar.com/schema/scalar-config.json",
+  "$schema": "https://cdn.scalar.com/schema/scalar-config-next.json",
+  "scalar": "2.0.0",
+  "info": {
+    "title": "Scalar Starter Kit",
+    "description": "Get Started with the Scalar Docs"
+  },
   "siteConfig": {
-    "theme": "purple",
     "logo": {
-      "darkMode": "https://scalar.com/logo-light.svg",
-      "lightMode": "https://scalar.com/logo-dark.svg"
+      "darkMode": "https://cdn.scalar.com/marketing/landing/logo-dark.svg",
+      "lightMode": "https://cdn.scalar.com/marketing/landing/logo-light.svg"
     }
   },
-  "guides": [
-    {
-      "name": "Quick Start",
-      "sidebar": [
-        {
-          "name": "Getting Started with Scalar",
-          "type": "folder",
-          "icon": "rocket",
-          "children": [
-            { "path": "docs/guides/quick-start/introduction.md", "type": "page", "name": "Overview" },
-            { "path": "docs/guides/quick-start/details/quickstart.md", "type": "page", "name": "Quickstart" },
-            { "path": "docs/guides/quick-start/details/development.md", "type": "page", "name": "Development" }
-          ]
-        },
-        {
-          "name": "Customizing Your Setup",
-          "type": "folder",
-          "icon": "gear",
-          "children": [
-            { "path": "docs/guides/quick-start/details/project-settings.md", "type": "page", "name": "Project Settings" },
-            { "path": "docs/guides/quick-start/details/api-client.md", "type": "page", "name": "API Client" }
-          ]
-        },
-        {
-          "name": "Appendix",
-          "type": "folder",
-          "icon": "notebook",
-          "defaultOpen": false,
-          "children": [
-            { "path": "docs/guides/quick-start/details/scalar-cli.md", "type": "page", "name": "Scalar CLI" },
-            { "path": "docs/guides/quick-start/details/syntax.md", "type": "page", "name": "Syntax" }
-          ]
+  "navigation": {
+    "routes": {
+      "/": {
+        "type": "group",
+        "title": "Scalar Starter Kit",
+        "children": {
+          "/": {
+            "type": "page",
+            "filepath": "docs/content/quickstart.md",
+            "title": "Quickstart",
+            "icon": "phosphor/regular/fast-forward"
+          },
+          "/usage": {
+            "type": "group",
+            "title": "Usage",
+            "mode": "flat",
+            "children": {
+              "/development": {
+                "type": "page",
+                "filepath": "docs/content/development.md",
+                "title": "Development",
+                "icon": "phosphor/regular/code"
+              },
+              "/api-references": {
+                "type": "page",
+                "filepath": "docs/content/api-references.md",
+                "title": "API References",
+                "icon": "phosphor/regular/notebook"
+              },
+              "/documentation": {
+                "title": "Full Documentation",
+                "icon": "phosphor/regular/book",
+                "url": "https://scalar.com/products/docs/getting-started",
+                "type": "link"
+              }
+            }
+          },
+          "/examples": {
+            "type": "group",
+            "title": "Examples",
+            "mode": "flat",
+            "children": {
+              "/api": {
+                "type": "openapi",
+                "filepath": "docs/api-reference/openapi.yaml",
+                "title": "Example API",
+                "icon": "phosphor/regular/plug"
+              }
+            }
+          }
         }
-      ]
+      }
     }
-  ],
-  "references": [
-    {
-      "name": "API Reference",
-      "path": "./docs/api-reference/openapi.yaml"
-    }
-  ]
+  }
 }
