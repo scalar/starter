@@ -8,7 +8,7 @@ Reference an OpenAPI file stored in your GitHub repository by specifying a relat
 
 ```json
 {
-  "$schema": "https://cdn.scalar.com/schema/scalar-config-next.json",
+  "$schema": "https://registry.scalar.com/@scalar/schemas/config",
   "scalar": "2.0.0",
   "navigation": {
     "routes": {
@@ -36,7 +36,7 @@ And reference it using a namespace, slug, and version (optional):
 
 ```json
 {
-  "$schema": "https://cdn.scalar.com/schema/scalar-config-next.json",
+  "$schema": "https://registry.scalar.com/@scalar/schemas/config",
   "scalar": "2.0.0",
   "navigation": {
     "routes": {
@@ -59,7 +59,7 @@ Fetch an OpenAPI document from a remote URL. The document is fetched on each pag
 
 ```json
 {
-  "$schema": "https://cdn.scalar.com/schema/scalar-config-next.json",
+  "$schema": "https://registry.scalar.com/@scalar/schemas/config",
   "scalar": "2.0.0",
   "navigation": {
     "routes": {
