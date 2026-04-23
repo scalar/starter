@@ -12,6 +12,10 @@
     }
   },
   "navigation": {
+    "header": [
+      { "type": "link", "title": "Log in", "to": "https://dashboard.scalar.com/login" },
+      { "type": "link", "title": "Register", "style": "button", "icon": "phosphor/regular/user-plus", "to": "https://dashboard.scalar.com/register" }
+    ],
     "routes": {
       "/": {
         "type": "group",
