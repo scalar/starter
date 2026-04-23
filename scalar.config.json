@@ -19,32 +19,111 @@
         "children": {
           "/": {
             "type": "page",
-            "filepath": "docs/content/quickstart.md",
+            "filepath": "docs/content/quickstart.mdx",
             "title": "Quickstart",
             "icon": "phosphor/regular/fast-forward"
           },
-          "/usage": {
+          "/api-references": {
+            "type": "page",
+            "filepath": "docs/content/api-references.mdx",
+            "title": "API References",
+            "icon": "phosphor/regular/notebook"
+          },
+          "/components": {
             "type": "group",
-            "title": "Usage",
+            "title": "Components",
             "mode": "flat",
             "children": {
-              "/development": {
+              "/callout": {
                 "type": "page",
-                "filepath": "docs/content/development.md",
-                "title": "Development",
-                "icon": "phosphor/regular/code"
+                "filepath": "docs/content/components/callout.mdx",
+                "title": "Callout",
+                "icon": "phosphor/regular/megaphone"
               },
-              "/api-references": {
+              "/button": {
                 "type": "page",
-                "filepath": "docs/content/api-references.md",
-                "title": "API References",
-                "icon": "phosphor/regular/notebook"
+                "filepath": "docs/content/components/button.mdx",
+                "title": "Button",
+                "icon": "phosphor/regular/cursor-click"
               },
-              "/documentation": {
-                "title": "Full Documentation",
-                "icon": "phosphor/regular/book",
-                "url": "https://scalar.com/products/docs/getting-started",
-                "type": "link"
+              "/embed": {
+                "type": "page",
+                "filepath": "docs/content/components/embed.mdx",
+                "title": "Embed",
+                "icon": "phosphor/regular/video"
+              },
+              "/image": {
+                "type": "page",
+                "filepath": "docs/content/components/image.mdx",
+                "title": "Image",
+                "icon": "phosphor/regular/image"
+              },
+              "/fineprint": {
+                "type": "page",
+                "filepath": "docs/content/components/fineprint.mdx",
+                "title": "Fineprint",
+                "icon": "phosphor/regular/text-aa"
+              },
+              "/math": {
+                "type": "page",
+                "filepath": "docs/content/components/math.mdx",
+                "title": "Math",
+                "icon": "phosphor/regular/function"
+              },
+              "/page-link": {
+                "type": "page",
+                "filepath": "docs/content/components/page-link.mdx",
+                "title": "PageLink",
+                "icon": "phosphor/regular/link"
+              },
+              "/tabs": {
+                "type": "page",
+                "filepath": "docs/content/components/tabs.mdx",
+                "title": "Tabs",
+                "icon": "phosphor/regular/squares-four"
+              }
+            }
+          },
+          "/layouts": {
+            "type": "group",
+            "title": "Layouts",
+            "mode": "flat",
+            "children": {
+              "/no-toc": {
+                "type": "page",
+                "filepath": "docs/content/layouts/no-toc.mdx",
+                "title": "No TOC",
+                "icon": "phosphor/regular/list-dashes",
+                "layout": { "toc": false }
+              },
+              "/no-sidebar": {
+                "type": "page",
+                "filepath": "docs/content/layouts/no-sidebar.mdx",
+                "title": "No Sidebar",
+                "icon": "phosphor/regular/sidebar-simple",
+                "layout": { "sidebar": false }
+              },
+              "/search-in-header": {
+                "type": "page",
+                "filepath": "docs/content/layouts/search-in-header.mdx",
+                "title": "Search in Header",
+                "icon": "phosphor/regular/magnifying-glass",
+                "layout": { "search": { "position": "header" } }
+              },
+              "/minimal": {
+                "type": "page",
+                "filepath": "docs/content/layouts/minimal.mdx",
+                "title": "Minimal",
+                "icon": "phosphor/regular/square",
+                "layout": {
+                  "toc": false,
+                  "header": false,
+                  "sidebar": false,
+                  "tabs": false,
+                  "pageTitle": false,
+                  "pageActions": false,
+                  "search": { "enabled": false }
+                }
               }
             }
           },
