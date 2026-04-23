@@ -108,7 +108,12 @@
                 "filepath": "docs/content/layouts/search-in-header.mdx",
                 "title": "Search in Header",
                 "icon": "phosphor/regular/magnifying-glass",
-                "layout": { "search": { "position": "header" } }
+                "layout": {
+                  "header": true,
+                  "search": {
+                    "position": "header"
+                  }
+                }
               },
               "/minimal": {
                 "type": "page",
