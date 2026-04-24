@@ -33,6 +33,18 @@
             "title": "API References",
             "icon": "phosphor/regular/notebook"
           },
+          "/documentation": {
+            "type": "link",
+            "title": "Documentation",
+            "url": "https://scalar.com/products/docs/getting-started",
+            "icon": "phosphor/regular/book-open"
+          },
+          "/github": {
+            "type": "link",
+            "title": "GitHub",
+            "url": "https://github.com/scalar/starter",
+            "icon": "phosphor/regular/github-logo"
+          },
           "/components": {
             "type": "group",
             "title": "Components",
