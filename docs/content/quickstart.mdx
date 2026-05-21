@@ -1,0 +1,26 @@
+# Quickstart
+
+Welcome to the Scalar Docs Starter Kit — a template for deploying beautiful documentation from a GitHub repository. Every page is MDX by default: mix Markdown with JSX expressions (this page rendered in {new Date().getFullYear()}) and drop in components anywhere. Fork it, edit the files under `docs/content/`, and make it yours.
+
+## Explore
+
+- [**Layouts:**](layouts/no-toc) hide the sidebar, move search, or build a fully custom landing page
+- [**Components:**](components/callout) Callout, Button, Tabs, and every other component you can drop into MDX
+- [**API References:**](api-references) add OpenAPI documents from a file, the Scalar Registry, or a URL
+
+## Preview locally
+
+```bash
+npx @scalar/cli@latest project preview
+```
+
+Starts a dev server at `http://localhost:7971` with live reload.
+
+## Publish
+
+```bash
+npx @scalar/cli@latest auth login
+npx @scalar/cli@latest project publish
+```
+
+Your site will be available at `<your-slug>.apidocumentation.com`.

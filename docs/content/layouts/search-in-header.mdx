@@ -1,0 +1,19 @@
+# Search in Header
+
+Moves the search input from the sidebar into the top bar. Use when your audience expects search up top, or when the header feels empty.
+
+## Config
+
+```json
+{
+  "type": "page",
+  "filepath": "docs/content/layouts/search-in-header.mdx",
+  "layout": {
+    "search": {
+      "position": "header"
+    }
+  }
+}
+```
+
+`position` accepts `"sidebar"` (default) or `"header"`. Drop the `layout` block into the route for any page you want to behave this way.

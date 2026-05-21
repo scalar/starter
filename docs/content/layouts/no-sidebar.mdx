@@ -1,0 +1,17 @@
+# No Sidebar
+
+Hides the left navigation sidebar on this page only. Use for marketing pages or anything that wants full-width content.
+
+This is a page-level opt-out — the sidebar returns on every other page in the site.
+
+## Config
+
+```json
+{
+  "type": "page",
+  "filepath": "docs/content/layouts/no-sidebar.mdx",
+  "layout": { "sidebar": false }
+}
+```
+
+Drop the `layout` block into the route for any page you want to behave this way.

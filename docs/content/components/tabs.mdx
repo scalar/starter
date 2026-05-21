@@ -1,0 +1,40 @@
+import { Tabs, Tab } from 'scalar-mdx-components'
+
+# Tabs
+
+Group related content — typically code samples in different languages — behind a tab switcher.
+
+## Usage
+
+<Tabs default="JavaScript">
+  <Tab title="JavaScript">
+    ```js
+    const users = await fetch('/api/users').then((r) => r.json())
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests
+    users = requests.get('/api/users').json()
+    ```
+  </Tab>
+  <Tab title="cURL">
+    ```bash
+    curl https://api.example.com/users
+    ```
+  </Tab>
+</Tabs>
+
+## Props
+
+### `<Tabs>`
+
+| Prop      | Type     | Description                                                                        |
+| --------- | -------- | ---------------------------------------------------------------------------------- |
+| `default` | `string` | Title of the tab to open by default. Matches case-insensitively. First tab if omitted. |
+
+### `<Tab>`
+
+| Prop    | Type     | Description |
+| ------- | -------- | ----------- |
+| `title` | `string` | Tab label.  |

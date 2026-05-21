@@ -1,0 +1,21 @@
+import { Embed } from 'scalar-mdx-components'
+
+# Embed
+
+Drop any iframe-embeddable URL — video, demo, widget — directly into the page. Anything a provider allows to be framed (YouTube, Vimeo, Loom, CodeSandbox, Figma, …) works.
+
+## Usage
+
+<Embed src="https://www.youtube.com/embed/dQw4w9WgXcQ" alt="Example video" />
+
+## Props
+
+| Prop      | Type     | Description                                                                  |
+| --------- | -------- | ---------------------------------------------------------------------------- |
+| `src`     | `string` | URL to embed. Use the provider's **embed** URL, not the share/watch URL.     |
+| `alt`     | `string` | Accessible title for the iframe.                                             |
+| `caption` | `string` | Optional caption shown below the iframe.                                     |
+
+## Variants
+
+<Embed src="https://www.youtube.com/embed/dQw4w9WgXcQ" alt="YouTube example" caption="With a caption." />

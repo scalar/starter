@@ -1,0 +1,25 @@
+import { Image } from 'scalar-mdx-components'
+
+# Image
+
+Display an image with optional caption, dark-mode source, and sizing.
+
+## Usage
+
+<Image src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800" alt="A beautiful landscape" />
+
+## Props
+
+| Prop       | Type                | Description                                    |
+| ---------- | ------------------- | ---------------------------------------------- |
+| `src`      | `string`            | Image URL.                                     |
+| `alt`      | `string`            | Alt text for accessibility.                    |
+| `caption`  | `string`            | Optional caption shown below the image.        |
+| `src-dark` | `string`            | Alternative source rendered in dark mode.      |
+| `href`     | `string`            | Wrap the image in a link.                      |
+| `width`    | `string \| number`  | HTML `width` attribute.                        |
+| `height`   | `string \| number`  | HTML `height` attribute.                       |
+
+## Variants
+
+<Image src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800" alt="Mountain lake at sunset" caption="With a caption." />

@@ -5,7 +5,7 @@
 [![Twitter](https://img.shields.io/twitter/follow/scalar)](https://x.com/scalar)
 [![Discord](https://img.shields.io/discord/1135330207960678410?style=flat&color=5865F2)](https://discord.gg/scalar)
 
-Welcome to the Scalar Docs Starter Kit! Deploy Markdown and OpenAPI documents from GitHub.
+Welcome to the Scalar Docs Starter Kit! Deploy MDX and OpenAPI documents from GitHub.
 
 ## Preview
 
@@ -36,10 +36,14 @@ This repository includes a GitHub Action workflow that automatically validates t
 ```
 starter/
 ├── docs/
-│   ├── api-reference/      # OpenAPI documents
-│   └── guides/             # Free-form text
-├── scalar.config.json      # Configuration
+│   ├── api-reference/          # OpenAPI documents
+│   └── content/                # MDX pages (.mdx by default; .md still works)
+│       ├── components/         # Gallery — one page per Scalar MDX component
+│       └── layouts/            # Gallery — per-page layout overrides
+├── scalar.config.json          # Configuration
 ```
+
+Pages are `.mdx` by default, so you can mix Markdown with JSX expressions and drop in components like `<Callout>`, `<Button>`, or `<Tabs>`. Browse the Components and Layouts galleries in the preview for live examples.
 
 ## Configuration
 

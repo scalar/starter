@@ -1,0 +1,15 @@
+# Fineprint
+
+Render small legal-style text for disclaimers, terms-like footnotes, or version badges.
+
+Unlike the other components in this gallery, Fineprint is a **custom element**, not a React/MDX component. Use the lowercase tag `<scalar-fineprint>` directly — no `import` needed.
+
+## Usage
+
+<scalar-fineprint>
+  This is fine print. Subject to change without notice.
+</scalar-fineprint>
+
+## Why is this one different?
+
+Most components ship a React wrapper exported from `scalar-mdx-components`. Fineprint is implemented only as a server-rendered custom element, so you write it as HTML in your MDX and Scalar's server-side pipeline renders it. This is also how you'd use any other `<scalar-*>` element that doesn't have an MDX wrapper yet.

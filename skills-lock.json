@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "scalar-docs": {
+      "source": "scalar/scalar",
+      "sourceType": "github",
+      "computedHash": "11e11f9e8732d0873886e9290243f76d0188fc3cf2ce8674e595056a614073a5"
+    }
+  }
+}

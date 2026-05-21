@@ -1,0 +1,29 @@
+# Minimal
+
+Hides every piece of chrome: header, sidebar, tabs, TOC, page title, page actions, and search. Use for fully custom landing pages, marketing pages, or embeddable standalone docs.
+
+With everything off there's no built-in way back, so link somewhere manually:
+
+[← Back to Quickstart](/)
+
+## Config
+
+```json
+{
+  "type": "page",
+  "filepath": "docs/content/layouts/minimal.mdx",
+  "layout": {
+    "toc": false,
+    "header": false,
+    "sidebar": false,
+    "tabs": false,
+    "pageTitle": false,
+    "pageActions": false,
+    "search": {
+      "enabled": false
+    }
+  }
+}
+```
+
+Drop the `layout` block into the route for any page you want to behave this way.

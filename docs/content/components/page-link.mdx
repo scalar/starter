@@ -1,0 +1,24 @@
+import { PageLink } from 'scalar-mdx-components'
+
+# PageLink
+
+Link to another page in this documentation. Preferred over a plain Markdown link — the title and description stay in sync with the target page's metadata.
+
+## Usage
+
+<PageLink filepath="api-references.mdx" />
+
+## Props
+
+| Prop          | Type     | Description                                                                                      |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------ |
+| `filepath`    | `string` | Path to another MDX/Markdown page, relative to the content root (e.g. `components/tabs`).        |
+| `uid`         | `string` | Alternative to `filepath` for editor-managed docs.                                               |
+| `title`       | `string` | Override the target page's title.                                                                |
+| `description` | `string` | Override the target page's description.                                                          |
+
+## Variants
+
+<PageLink filepath="api-references" />
+
+<PageLink title="Custom title" description="Custom description overrides the target page's metadata" filepath="components/tabs" />

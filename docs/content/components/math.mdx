@@ -1,0 +1,22 @@
+import { Math } from 'scalar-mdx-components'
+
+# Math
+
+Render LaTeX equations with [KaTeX](https://katex.org/).
+
+## Usage
+
+<Math equation="E = mc^2" />
+
+## Props
+
+| Prop       | Type     | Description                                                            |
+| ---------- | -------- | ---------------------------------------------------------------------- |
+| `equation` | `string` | The LaTeX expression. Alternatively, put the expression in the body.   |
+| `caption`  | `string` | Optional caption shown below the rendered equation.                    |
+
+## Variants
+
+<Math equation="E = mc^2" caption="Einstein's mass–energy equivalence" />
+
+<Math equation="\sum_{i=1}^{n} i = \frac{n(n+1)}{2}" caption="Sum of the first n natural numbers" />

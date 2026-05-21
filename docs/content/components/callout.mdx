@@ -1,0 +1,38 @@
+import { Callout } from 'scalar-mdx-components'
+
+# Callout
+
+Highlight a block of content with a typed banner. Use sparingly — one or two per page.
+
+## Usage
+
+<Callout type="info">
+  This is the simplest possible callout.
+</Callout>
+
+## Props
+
+| Prop   | Type                                                               | Description                                          |
+| ------ | ------------------------------------------------------------------ | ---------------------------------------------------- |
+| `type` | `'info' \| 'warning' \| 'danger' \| 'success' \| 'neutral'`        | Controls color and icon. Defaults to `neutral`.      |
+| `icon` | `string`                                                           | Override the default icon for this type.             |
+
+## Variants
+
+<Callout type="info">
+  Neutral information the reader may want to know.
+</Callout>
+
+<Callout type="warning">
+  Something to be careful about — non-blocking.
+</Callout>
+
+<Callout type="danger">
+  Something destructive or blocking. Read before proceeding.
+</Callout>
+
+<Callout type="success">
+  A happy confirmation or positive note.
+</Callout>
+
+Markdown works inside the body — use `code`, **bold**, [links](https://scalar.com), and lists freely.
