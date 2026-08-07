@@ -161,6 +161,14 @@
                 "icon": "phosphor/regular/plug"
               }
             }
+          },
+          "/moneycare-platform-api": {
+            "type": "openapi",
+            "title": "money:care Platform API",
+            "filepath": "api/moneycare-platform-api.json",
+            "namespace": "scalar",
+            "slug": "moneycare-platform-api",
+            "mode": "nested"
           }
         }
       }

@@ -1,0 +1,2261 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "money:care Platform API",
+    "description": "This is the public API of the money:care Platform.\n\nReference data is based on [ESMA FIRDS](https://registers.esma.europa.eu/publication/searchRegister?core=esma_registers_firds), [GLEIF LEI data](https://www.gleif.org/en/meta/lei-data-terms-of-use) and [OpenFIGI](https://www.openfigi.com/docs/terms-of-service); MIC resolution uses [ISO 10383](https://www.iso.org/standard/61067.html). The data is processed and enriched by money:care. No source provider endorses money:care or its products.\n",
+    "contact": {
+      "name": "money:care GmbH"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://platform.moneycare.io",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "api_key": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Playlist API",
+      "description": "The Playlist API allows you to request playlist data."
+    },
+    {
+      "name": "Fund API",
+      "description": "The fund API allows you to request fund data."
+    },
+    {
+      "name": "Company API",
+      "description": "The company API allows you to request company data."
+    },
+    {
+      "name": "Portfolio API",
+      "description": "The Portfolio API calculates sustainability scores of a portfolio consisting of companies and equity funds. It automatically retrieves holdings data from the money:care database or uses user-provided holdings. The API then calculates sustainability metrics—including overall impact, climate, society, and gender indicators—to help you understand the sustainability performance of your portfolio."
+    }
+  ],
+  "paths": {
+    "/api/public/portfolio/v1/calculate": {
+      "post": {
+        "tags": [
+          "Portfolio API"
+        ],
+        "summary": "Calculate sustainability scores for a group of companies and equity funds.",
+        "description": "This endpoint accepts a list of companies with their ISINs and assigned weights. It then returns aggregated sustainability impact metrics for the entire group, including the total and available weight of the portfolio, impact scores (overall, climate, society, and gender), underlying indicators, and coverage details. It also identifies any ISINs for which data is not available.",
+        "operationId": "calculate",
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PortfolioImpactCalculationRequestPDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/playlist/v1/tracking": {
+      "post": {
+        "tags": [
+          "Playlist API"
+        ],
+        "summary": "Tracks interactions on playlists.",
+        "operationId": "tracking",
+        "parameters": [
+          {
+            "name": "X-Referrer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaylistInteractionPDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully tracked interaction"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/public/playlist/v1/lookup": {
+      "post": {
+        "tags": [
+          "Playlist API"
+        ],
+        "summary": "Returns playlists matching many ISINs",
+        "description": "Bulk reverse lookup from up to 5000 ISINs to public playlist teasers. Returns unique matching playlists once and a matchesByIsin map containing playlist ids per first submitted trimmed ISIN. Results are ordered by playlist sortOrder and id.",
+        "operationId": "lookupPlaylists",
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaylistLookupRequestPDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Missing, blank or too many ISINs"
+          },
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaylistLookupResultPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/playlist/v1": {
+      "get": {
+        "tags": [
+          "Playlist API"
+        ],
+        "summary": "Returns a list of all playlists",
+        "description": "Returns a list of all playlists.",
+        "operationId": "getPlaylists",
+        "parameters": [
+          {
+            "name": "includePositions",
+            "in": "query",
+            "description": "Flag to configure whether positions should be included. Defaults to false.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "positionsLimit",
+            "in": "query",
+            "description": "Amount of Playlist Positions that should be returned for a Playlist. If not set, all are returned. This Parameter only has an effect if the includePositions flag is set to 'true'.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "rowTags",
+            "in": "query",
+            "description": "Playlist row tag filters. Multiple values use OR semantics.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "topics",
+            "in": "query",
+            "description": "Playlist topic filters. Multiple values use OR semantics.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlaylistMinimalPDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/playlist/v1/{id}": {
+      "get": {
+        "tags": [
+          "Playlist API"
+        ],
+        "summary": "Returns the playlist for the given id",
+        "description": "Retrieves detailed information about a playlist using its unique identifier.",
+        "operationId": "getPlaylist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Playlist id.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "11aa1a6c-a597-47f7-bf4b-09797496f500"
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaylistPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/playlist/v1/lookup/{isin}": {
+      "get": {
+        "tags": [
+          "Playlist API"
+        ],
+        "summary": "Returns playlists matching a given ISIN",
+        "description": "Reverse lookup from an ISIN to public playlist teasers. The ISIN is trimmed, uppercased and whitespace-normalized. Company financial asset aliases of type STOCK and CORPORATE_BOND are resolved like the Company API.",
+        "operationId": "lookupPlaylists_1",
+        "parameters": [
+          {
+            "name": "isin",
+            "in": "path",
+            "description": "ISIN to look up.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "US0378331005"
+          },
+          {
+            "name": "includePositions",
+            "in": "query",
+            "description": "Flag to configure whether positions should be included. Defaults to false.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "positionsLimit",
+            "in": "query",
+            "description": "Amount of Playlist Positions that should be returned for a Playlist. If not set, all are returned. This Parameter only has an effect if the includePositions flag is set to 'true'.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Missing or blank ISIN"
+          },
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlaylistMinimalPDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/fund/v1": {
+      "get": {
+        "tags": [
+          "Fund API"
+        ],
+        "summary": "Returns a list of all funds",
+        "description": "Retrieves a paginated list of all funds covered by the API. Supports optional query parameters for pagination, sorting, and filtering by update date.",
+        "operationId": "getFunds",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page you are requesting. Defaults to 0.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Size of the page you are requesting. Defaults to 25.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 25
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction. Defaults to ASC.",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SortDirection"
+            },
+            "example": "ASC"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Name of the property to sort by. Defaults to name.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "name"
+          },
+          {
+            "name": "updatedAfter",
+            "in": "query",
+            "description": "When set, return only funds which were created or updated after the provided point in time.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2024-01-01T00:00:00"
+          },
+          {
+            "name": "includeUnavailable",
+            "in": "query",
+            "description": "Flag to configure whether unavailable funds should be included. Defaults to false.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundListPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/fund/v1/{id}": {
+      "get": {
+        "tags": [
+          "Fund API"
+        ],
+        "summary": "Returns a fund for given ID",
+        "description": "Retrieves detailed information about a fund using its unique identifier. The response includes data such as the fund's name, provider, ISIN, launch date, country code, asset class, and impact calculation results.",
+        "operationId": "getFund",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Fund id.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "c05df400-4fee-474b-8884-b359599f02f6"
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/fund/v1/isin/{isin}": {
+      "get": {
+        "tags": [
+          "Fund API"
+        ],
+        "summary": "Returns a fund for given ISIN",
+        "description": "Retrieves detailed information about a fund using its ISIN (International Securities Identification Number). Provides the same data as the endpoint above.",
+        "operationId": "getFundByIsin",
+        "parameters": [
+          {
+            "name": "isin",
+            "in": "path",
+            "description": "Fund ISIN.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "IE00BMDV7354"
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/company/v1": {
+      "get": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Returns a list of all companies",
+        "description": "Returns a paginated list of all companies covered by the API. Supports optional query parameters for pagination, sorting, inclusion of unavailable results and filtering by update date.",
+        "operationId": "getCompanies",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page you are requesting. Defaults to 0.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Size of the page you are requesting. Defaults to 25.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 25
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction. Defaults to ASC if a sortBy is given, otherwise to null.",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SortDirection"
+            },
+            "example": "ASC"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Name of the property to sort by. Defaults to null.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "name"
+          },
+          {
+            "name": "updatedAfter",
+            "in": "query",
+            "description": "When set, return only companies which were created or updated after the provided point in time.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2024-01-01T00:00:00"
+          },
+          {
+            "name": "includeUnavailable",
+            "in": "query",
+            "description": "Flag to configure whether unavailable companies should be included. Defaults to false.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyListPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/company/v1/{id}": {
+      "get": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Returns a company for given ID",
+        "description": "Retrieves detailed information about a company using its unique identifier. The response includes the company's name, ISIN, industry, country code, website, impact calculation results, sources, and indicators.",
+        "operationId": "getCompany",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company id.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "dcb34990-7a36-415f-83b0-11a1ef86a016"
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/company/v1/isin/{isin}": {
+      "get": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Returns a company for given ISIN",
+        "description": "Retrieves detailed information about a company using its ISIN. Provides the same data as the endpoint above.",
+        "operationId": "getCompanyByIsin",
+        "parameters": [
+          {
+            "name": "isin",
+            "in": "path",
+            "description": "Company ISIN.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "US0378331005"
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          },
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyPDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/company/v1/compare": {
+      "get": {
+        "tags": [
+          "Company API"
+        ],
+        "summary": "Returns companies better than the provided reference value",
+        "description": "Returns a paginated list of companies whose selected score is better than the comparison value. Either 'score' or 'isin' must be provided. If 'score' is provided, 'isin' is ignored.",
+        "operationId": "compareCompanies",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page you are requesting. Defaults to 0.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Size of the page you are requesting. Defaults to 25.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 25
+          },
+          {
+            "name": "scoreType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "IMPACT_SCORE",
+                "CLIMATE_SCORE",
+                "SOCIETY_SCORE",
+                "GENDER_SCORE"
+              ]
+            }
+          },
+          {
+            "name": "isin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "score",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "industry",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Industry"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Locale for the request according to ISO 639-1 language code. For relevant cases one can add the ISO 3166-1 country code, in the format 'language code - country code' (e.g. de-AT, en-US, fr-FR). In case we do not support the locale or cannot resolve it, de-AT is used as fallback value.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "de-AT"
+            },
+            "example": "de-AT"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompareResultPDTO"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The API key or source IP rate limit was exceeded. Back off and honor Retry-After when present."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AssetType": {
+        "type": "string",
+        "enum": [
+          "COMPANY",
+          "FUND",
+          "PORTFOLIO",
+          "UNKNOWN"
+        ]
+      },
+      "AssetWeightPDTO": {
+        "required": [
+          "assetType",
+          "isin",
+          "weight"
+        ],
+        "type": "object",
+        "properties": {
+          "isin": {
+            "type": "string",
+            "example": "US0378331005"
+          },
+          "weight": {
+            "type": "number",
+            "example": 60
+          },
+          "assetType": {
+            "$ref": "#/components/schemas/AssetType"
+          },
+          "holdings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssetWeightPDTO"
+            }
+          }
+        }
+      },
+      "PortfolioImpactCalculationRequestPDTO": {
+        "required": [
+          "assets"
+        ],
+        "type": "object",
+        "properties": {
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssetWeightPDTO"
+            }
+          }
+        }
+      },
+      "AssetImpactCalculationResultPDTO": {
+        "required": [
+          "dataAvailable",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "dataAvailable": {
+            "type": "boolean",
+            "example": true
+          },
+          "impactScore": {
+            "type": "number",
+            "example": 0.57
+          },
+          "impactScoreTooltip": {
+            "type": "string"
+          },
+          "climateScore": {
+            "type": "number",
+            "example": 0.72
+          },
+          "climateScoreTooltip": {
+            "type": "string"
+          },
+          "societyScore": {
+            "type": "number",
+            "example": 0.27
+          },
+          "societyScoreTooltip": {
+            "type": "string"
+          },
+          "genderScore": {
+            "type": "number",
+            "example": 0.71
+          },
+          "genderScoreTooltip": {
+            "type": "string"
+          },
+          "sustainabilityInterpretation": {
+            "$ref": "#/components/schemas/SustainabilityInterpretation"
+          },
+          "type": {
+            "$ref": "#/components/schemas/AssetType"
+          }
+        }
+      },
+      "CeoEmployeeRatioIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "CEO_EMPLOYEE_RATIO",
+          "name": "CEO Employee Ratio",
+          "group": "SOCIETY",
+          "unit": {
+            "shortName": "rat",
+            "longName": "Ratio",
+            "value": "RATIO"
+          },
+          "normalizedValue": 0.45,
+          "threshold": 30,
+          "value": 67,
+          "sustainabilityInterpretation": "MODERATELY_SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ceo": {
+                "type": "string",
+                "example": "Tim Cook"
+              }
+            }
+          }
+        ]
+      },
+      "CompanyImpactCalculationResultPDTO": {
+        "required": [
+          "dataAvailable"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AssetImpactCalculationResultPDTO"
+          }
+        ]
+      },
+      "EmployeeTurnoverRateIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "EMPLOYEE_TURNOVER_RATE",
+          "name": "Employee Turnover Rate",
+          "group": "SOCIETY",
+          "unit": {
+            "shortName": "%",
+            "longName": "Percentage",
+            "value": "PERCENT"
+          },
+          "normalizedValue": 0.68,
+          "threshold": 10,
+          "value": 14.6,
+          "sustainabilityInterpretation": "ALMOST_SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "FundImpactCalculationResultPDTO": {
+        "required": [
+          "dataAvailable"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AssetImpactCalculationResultPDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "totalWeightPercentage": {
+                "type": "number",
+                "description": "The total weight of provided assets.",
+                "example": 96.85
+              },
+              "availableWeightPercentage": {
+                "type": "number",
+                "description": "The total weight of provided assets that corresponds to all assets (including the underlying assets of funds) for which relevant data is available.",
+                "example": 61.49
+              },
+              "unavailableIsins": {
+                "uniqueItems": true,
+                "type": "array",
+                "description": "Any ISINs not found in the money:care database or for which data was otherwise unavailable.",
+                "example": [
+                  "KYG8878S1030"
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "Any ISINs not found in the money:care database or for which data was otherwise unavailable.",
+                  "example": "[\"KYG8878S1030\"]"
+                }
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/AssetImpactCalculationResultPDTO"
+          }
+        ]
+      },
+      "GenderPayGapIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "GENDER_PAY_GAP",
+          "name": "Gender Pay Gap",
+          "group": "GENDER",
+          "unit": {
+            "shortName": "%",
+            "longName": "Percentage",
+            "value": "PERCENT"
+          },
+          "normalizedValue": 1,
+          "threshold": 3,
+          "value": 0,
+          "sustainabilityInterpretation": "SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "GlassCeilingIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "GLASS_CEILING",
+          "name": "Glass Ceiling",
+          "group": "GENDER",
+          "unit": {
+            "shortName": "%",
+            "longName": "Percentage",
+            "value": "PERCENT"
+          },
+          "normalizedValue": 1,
+          "threshold": 90,
+          "value": 100,
+          "sustainabilityInterpretation": "SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "GreenhouseGasEmissionIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "GREENHOUSE_GAS_EMISSION",
+          "name": "Greenhouse Gas Emission",
+          "group": "CLIMATE",
+          "unit": {
+            "shortName": "t",
+            "longName": "Tons",
+            "value": "TONS"
+          },
+          "normalizedValue": 1,
+          "threshold": 2817701.03,
+          "value": 499573,
+          "sustainabilityInterpretation": "SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "emissionMultiplier": {
+                "type": "number",
+                "example": 1.48
+              },
+              "emissionPercentage": {
+                "type": "number",
+                "example": 148
+              }
+            }
+          }
+        ]
+      },
+      "HarassmentDiscriminationIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "HARASSMENT_DISCRIMINATION",
+          "name": "Harassment and Discrimination",
+          "group": "SOCIETY",
+          "unit": {
+            "shortName": "abs",
+            "longName": "Absolute",
+            "value": "ABSOLUTE"
+          },
+          "normalizedValue": 1,
+          "threshold": 4,
+          "value": 4,
+          "sustainabilityInterpretation": "SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "IndicatorGroup": {
+        "type": "string",
+        "enum": [
+          "CLIMATE",
+          "SOCIETY",
+          "GENDER"
+        ]
+      },
+      "IndicatorPDTO": {
+        "required": [
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "normalizedValue": {
+            "type": "number",
+            "format": "double",
+            "example": 0.95
+          },
+          "threshold": {
+            "type": "number",
+            "format": "double",
+            "example": 100
+          },
+          "value": {
+            "type": "number",
+            "example": 95.16
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "group": {
+            "$ref": "#/components/schemas/IndicatorGroup"
+          },
+          "type": {
+            "$ref": "#/components/schemas/IndicatorType"
+          },
+          "name": {
+            "type": "string",
+            "example": "Renewable Energy"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/IndicatorUnitPDTO"
+          },
+          "tooltip": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string",
+            "example": "Apple obtains 95.2% of its energy from renewable energies."
+          },
+          "thresholdDescription": {
+            "type": "string",
+            "example": "Target value per method: min. 100%"
+          },
+          "sustainabilityInterpretation": {
+            "$ref": "#/components/schemas/SustainabilityInterpretation"
+          },
+          "availabilityWeightPercentage": {
+            "type": "number"
+          }
+        }
+      },
+      "IndicatorType": {
+        "type": "string",
+        "enum": [
+          "RENEWABLE_ENERGY",
+          "GREENHOUSE_GAS_EMISSION",
+          "SUPPLY_CHAIN",
+          "WASTE_RECYCLING",
+          "UNIONIZATION",
+          "CEO_EMPLOYEE_RATIO",
+          "EMPLOYEE_TURNOVER_RATE",
+          "HARASSMENT_DISCRIMINATION",
+          "WOMEN_IN_BOARD",
+          "GENDER_PAY_GAP",
+          "WOMEN_IN_MANAGEMENT",
+          "GLASS_CEILING"
+        ]
+      },
+      "IndicatorUnit": {
+        "type": "string",
+        "enum": [
+          "PERCENT",
+          "ABSOLUTE",
+          "RATIO",
+          "TONS",
+          "UNKNOWN"
+        ]
+      },
+      "IndicatorUnitPDTO": {
+        "type": "object",
+        "properties": {
+          "shortName": {
+            "type": "string",
+            "example": "%"
+          },
+          "longName": {
+            "type": "string",
+            "example": "Percent"
+          },
+          "value": {
+            "$ref": "#/components/schemas/IndicatorUnit"
+          }
+        }
+      },
+      "PortfolioImpactCalculationResultPDTO": {
+        "required": [
+          "dataAvailable"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AssetImpactCalculationResultPDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "totalWeightPercentage": {
+                "type": "number",
+                "description": "The total weight of provided assets.",
+                "example": 96.85
+              },
+              "availableWeightPercentage": {
+                "type": "number",
+                "description": "The total weight of provided assets that corresponds to all assets (including the underlying assets of funds) for which relevant data is available.",
+                "example": 61.49
+              },
+              "unavailableIsins": {
+                "uniqueItems": true,
+                "type": "array",
+                "description": "Any ISINs not found in the money:care database or for which data was otherwise unavailable.",
+                "example": [
+                  "KYG8878S1030"
+                ],
+                "items": {
+                  "type": "string",
+                  "description": "Any ISINs not found in the money:care database or for which data was otherwise unavailable.",
+                  "example": "[\"KYG8878S1030\"]"
+                }
+              },
+              "missingWeightPercentage": {
+                "type": "number",
+                "description": "The total weight of assets provided in the request for which we don't have any data.",
+                "example": 0
+              },
+              "rateableWeightPercentage": {
+                "type": "number",
+                "description": "The total weight of provided assets that corresponds to all assets (including the underlying assets of funds) rateable by our framework.",
+                "example": 98.74
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/AssetImpactCalculationResultPDTO"
+          }
+        ]
+      },
+      "PortfolioPDTO": {
+        "required": [
+          "impactCalculationResult",
+          "indicators"
+        ],
+        "type": "object",
+        "properties": {
+          "impactCalculationResult": {
+            "$ref": "#/components/schemas/PortfolioImpactCalculationResultPDTO"
+          },
+          "indicators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IndicatorPDTO"
+            }
+          }
+        }
+      },
+      "RenewableEnergyIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "RENEWABLE_ENERGY",
+          "name": "Renewable Energy",
+          "group": "CLIMATE",
+          "unit": {
+            "shortName": "%",
+            "longName": "Percentage",
+            "value": "PERCENT"
+          },
+          "normalizedValue": 0.63,
+          "threshold": 100,
+          "value": 62.88,
+          "sustainabilityInterpretation": "MODERATELY_SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "SupplyChainIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "SUPPLY_CHAIN",
+          "name": "Supply Chain",
+          "group": "CLIMATE",
+          "unit": {
+            "shortName": "t",
+            "longName": "Tons",
+            "value": "TONS"
+          },
+          "normalizedValue": 0.05,
+          "threshold": 2817701.03,
+          "value": 57277537,
+          "sustainabilityInterpretation": "NOT_SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "emissionMultiplier": {
+                "type": "number",
+                "example": 3.44
+              },
+              "emissionPercentage": {
+                "type": "number",
+                "example": 344
+              }
+            }
+          }
+        ]
+      },
+      "SustainabilityInterpretation": {
+        "type": "string",
+        "enum": [
+          "SUSTAINABLE",
+          "ALMOST_SUSTAINABLE",
+          "MODERATELY_SUSTAINABLE",
+          "NOT_SUSTAINABLE",
+          "NOT_AVAILABLE"
+        ]
+      },
+      "UnionizationIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "UNIONIZATION",
+          "name": "Unionization",
+          "group": "SOCIETY",
+          "unit": {
+            "shortName": "%",
+            "longName": "Percentage",
+            "value": "PERCENT"
+          },
+          "normalizedValue": 0.96,
+          "threshold": 80,
+          "value": 77,
+          "sustainabilityInterpretation": "ALMOST_SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "WasteRecyclingIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "WASTE_RECYCLING",
+          "name": "Waste Recycling",
+          "group": "CLIMATE",
+          "unit": {
+            "shortName": "%",
+            "longName": "Percentage",
+            "value": "PERCENT"
+          },
+          "normalizedValue": 1,
+          "threshold": 75,
+          "value": 85.06,
+          "sustainabilityInterpretation": "SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "WomenInBoardIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "WOMEN_IN_BOARD",
+          "name": "Women in Board",
+          "group": "GENDER",
+          "unit": {
+            "shortName": "%",
+            "longName": "Percentage",
+            "value": "PERCENT"
+          },
+          "normalizedValue": 1,
+          "threshold": 40,
+          "value": 45.45,
+          "sustainabilityInterpretation": "SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "WomenInManagementIndicatorPDTO": {
+        "type": "object",
+        "example": {
+          "type": "WOMEN_IN_MANAGEMENT",
+          "name": "Women in Management",
+          "group": "GENDER",
+          "unit": {
+            "shortName": "%",
+            "longName": "Percentage",
+            "value": "PERCENT"
+          },
+          "normalizedValue": 0.85,
+          "threshold": 40,
+          "value": 34,
+          "sustainabilityInterpretation": "ALMOST_SUSTAINABLE"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IndicatorPDTO"
+          }
+        ]
+      },
+      "PlaylistAction": {
+        "type": "string",
+        "description": "Tracked playlist interaction action.",
+        "example": "SHOW_MORE",
+        "enum": [
+          "WATCHLIST_ADD",
+          "JUMP_TO_ORDER_FLOW",
+          "JUMP_TO_LEAD_FORM",
+          "COMPLETION_OF_LEAD_SIGNUP",
+          "ORDER_COMPLETED",
+          "JUMP_TO_STOCK_DASHBOARD",
+          "PLAYLIST_OVERVIEW_VIEWED",
+          "PLAYLIST_DETAILS_VIEWED",
+          "SHOW_MORE",
+          "CALL_TO_ACTION"
+        ]
+      },
+      "PlaylistInteractionPDTO": {
+        "required": [
+          "action"
+        ],
+        "type": "object",
+        "properties": {
+          "playlistId": {
+            "type": "string",
+            "description": "Playlist id. Required for detail and position-level actions, including JUMP_TO_LEAD_FORM, COMPLETION_OF_LEAD_SIGNUP and ORDER_COMPLETED; optional for PLAYLIST_OVERVIEW_VIEWED.",
+            "example": "11aa1a6c-a597-47f7-bf4b-09797496f500"
+          },
+          "isin": {
+            "type": "string",
+            "description": "Security ISIN. Required for WATCHLIST_ADD, JUMP_TO_ORDER_FLOW, JUMP_TO_LEAD_FORM, COMPLETION_OF_LEAD_SIGNUP, ORDER_COMPLETED, JUMP_TO_STOCK_DASHBOARD, SHOW_MORE and CALL_TO_ACTION.",
+            "example": "JP3756600007"
+          },
+          "action": {
+            "$ref": "#/components/schemas/PlaylistAction"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "description": "Position sort order. Optional, but recommended for position-level actions.",
+            "format": "int32",
+            "example": 0
+          }
+        }
+      },
+      "PlaylistLookupRequestPDTO": {
+        "required": [
+          "isins"
+        ],
+        "type": "object",
+        "properties": {
+          "isins": {
+            "type": "array",
+            "description": "ISINs to look up. Values are matched case-insensitively after trimming and whitespace normalization. Maximum: 5000.",
+            "example": [
+              "US0378331005",
+              "JP3756600007"
+            ],
+            "items": {
+              "type": "string",
+              "description": "ISINs to look up. Values are matched case-insensitively after trimming and whitespace normalization. Maximum: 5000.",
+              "example": "[\"US0378331005\",\"JP3756600007\"]"
+            }
+          },
+          "includePositions": {
+            "type": "boolean",
+            "description": "Flag to configure whether positions should be included. Defaults to false.",
+            "example": false
+          },
+          "positionsLimit": {
+            "type": "integer",
+            "description": "Amount of Playlist Positions that should be returned for a Playlist. Only applies when includePositions is true.",
+            "format": "int32",
+            "example": 4
+          }
+        },
+        "description": "Bulk playlist lookup request. Accepts up to 5000 ISINs."
+      },
+      "PlaylistLookupResultPDTO": {
+        "type": "object",
+        "properties": {
+          "playlists": {
+            "type": "array",
+            "description": "Unique playlists matching at least one requested ISIN, ordered by playlist sortOrder and id.",
+            "items": {
+              "$ref": "#/components/schemas/PlaylistMinimalPDTO"
+            }
+          },
+          "matchesByIsin": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "description": "First submitted trimmed ISIN to matching playlist ids. Each list follows the same order as playlists.",
+              "items": {
+                "type": "string",
+                "description": "First submitted trimmed ISIN to matching playlist ids. Each list follows the same order as playlists."
+              }
+            },
+            "description": "First submitted trimmed ISIN to matching playlist ids. Each list follows the same order as playlists."
+          }
+        },
+        "description": "Bulk playlist lookup result."
+      },
+      "PlaylistMinimalPDTO": {
+        "required": [
+          "shortDescription",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "11aa1a6c-a597-47f7-bf4b-09797496f500"
+          },
+          "title": {
+            "type": "string",
+            "example": "Iconic Brands"
+          },
+          "shortDescription": {
+            "type": "string",
+            "example": "Globally recognized brands with cult status"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://mncplatformprodstrgacc.blob.core.windows.net/playlist-image/11aa1a6c-a597-47f7-bf4b-09797496f500%2F883eee2c07df0aecaa5f19d893fd64f1cae4559f5c45ff9d3bdaed82c18649"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "positionsCount": {
+            "type": "integer",
+            "format": "int32",
+            "example": 13
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlaylistPositionMinimalPDTO"
+            }
+          },
+          "rowTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PlaylistPositionMinimalPDTO": {
+        "required": [
+          "isin",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Nintendo"
+          },
+          "isin": {
+            "type": "string",
+            "example": "JP3756600007"
+          }
+        }
+      },
+      "PlaylistIdPDTO": {
+        "required": [
+          "id",
+          "imageUrl",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "e9482e48-15cc-416d-8ee6-2a7e2d25e951"
+          },
+          "name": {
+            "type": "string",
+            "example": "Gaming Giants"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://mncplatformprodstrgacc.blob.core.windows.net/playlist-image/e9482e48-15cc-416d-8ee6-2a7e2d25e951%2F14c912772efe35d6d2971dde02b6140e8b561ead27c5617aa52582d6b85c312"
+          }
+        }
+      },
+      "PlaylistPDTO": {
+        "required": [
+          "longDescription",
+          "shortDescription",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "11aa1a6c-a597-47f7-bf4b-09797496f500"
+          },
+          "title": {
+            "type": "string",
+            "example": "Iconic Brands"
+          },
+          "shortDescription": {
+            "type": "string",
+            "example": "Globally recognized brands with cult status"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://mncplatformprodstrgacc.blob.core.windows.net/playlist-image/11aa1a6c-a597-47f7-bf4b-09797496f500%2F883eee2c07df0aecaa5f19d893fd64f1cae4559f5c45ff9d3bdaed82c18649"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "positionsCount": {
+            "type": "integer",
+            "format": "int32",
+            "example": 13
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "longDescription": {
+            "type": "string",
+            "example": "This selection showcases companies that have built well-known brands over the course of decades."
+          },
+          "heroImageUrl": {
+            "type": "string",
+            "example": "https://mncplatformprodstrgacc.blob.core.windows.net/playlist-image/11aa1a6c-a597-47f7-bf4b-09797496f500%2F93653c4f943b37d596fcde6a4e4416de3a8b22ff6fda3ba0e3293d52e4536b"
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlaylistPositionPDTO"
+            }
+          },
+          "rowTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PlaylistPositionPDTO": {
+        "required": [
+          "description",
+          "id",
+          "isin",
+          "name",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "413aa2ba-fd8f-42a6-815b-8c4a8f210858"
+          },
+          "name": {
+            "type": "string",
+            "example": "Nintendo"
+          },
+          "isin": {
+            "type": "string",
+            "example": "JP3756600007"
+          },
+          "description": {
+            "type": "string",
+            "example": "<p>By skillfully combining creative hardware with popular characters like Mario, this traditional Japanese company creates experiences that connect generations of fans across the world.</p>"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32",
+            "example": 0
+          },
+          "countryIso3Code": {
+            "type": "string",
+            "example": "JPN"
+          },
+          "industry": {
+            "type": "string",
+            "example": "Arts, Entertainment, & Recreation"
+          },
+          "otherPlaylists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlaylistIdPDTO"
+            }
+          }
+        }
+      },
+      "SortDirection": {
+        "type": "string",
+        "enum": [
+          "ASC",
+          "DESC"
+        ]
+      },
+      "FundListPDTO": {
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1434
+          },
+          "funds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FundMinimalPDTO"
+            }
+          }
+        }
+      },
+      "FundMinimalPDTO": {
+        "required": [
+          "id",
+          "impactCalculationResult",
+          "indicators",
+          "isin",
+          "name",
+          "provider"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "c05df400-4fee-474b-8884-b359599f02f6"
+          },
+          "isin": {
+            "type": "string",
+            "example": "IE00BMDV7354"
+          },
+          "name": {
+            "type": "string",
+            "example": "AC Asia Pacific ex Japan Research Enhanced Index Equity Active UCITS ETF"
+          },
+          "provider": {
+            "type": "string",
+            "example": "JPMorgan"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://moneycare.io/en/platform/fund/IE00BMDV7354"
+          },
+          "impactCalculationResult": {
+            "$ref": "#/components/schemas/FundImpactCalculationResultPDTO"
+          },
+          "indicators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IndicatorPDTO"
+            }
+          }
+        }
+      },
+      "FundHoldingPDTO": {
+        "required": [
+          "companyId",
+          "companyIsin",
+          "companyName",
+          "id",
+          "impactCalculationResult",
+          "isin"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "942d34a2-61e8-4795-9ab9-8334bd59310b"
+          },
+          "isin": {
+            "type": "string",
+            "example": "TW0002330008"
+          },
+          "weight": {
+            "type": "number",
+            "example": 10.1275
+          },
+          "marketValue": {
+            "type": "number"
+          },
+          "sharesCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "companyId": {
+            "type": "string",
+            "example": "01316506-d4a3-4420-bfbe-9c4fae7d7ae4"
+          },
+          "companyName": {
+            "type": "string",
+            "example": "TAIWAN SEMICONDUCTOR MANUF TWD 10.0"
+          },
+          "companyIsin": {
+            "type": "string",
+            "example": "TW0002330008"
+          },
+          "companyCountryIso3Code": {
+            "type": "string",
+            "example": "TWN"
+          },
+          "impactCalculationResult": {
+            "$ref": "#/components/schemas/CompanyImpactCalculationResultPDTO"
+          }
+        }
+      },
+      "FundPDTO": {
+        "required": [
+          "holdings",
+          "id",
+          "impactCalculationResult",
+          "indicators",
+          "isin",
+          "name",
+          "provider"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "c05df400-4fee-474b-8884-b359599f02f6"
+          },
+          "isin": {
+            "type": "string",
+            "example": "IE00BMDV7354"
+          },
+          "name": {
+            "type": "string",
+            "example": "AC Asia Pacific ex Japan Research Enhanced Index Equity Active UCITS ETF"
+          },
+          "provider": {
+            "type": "string",
+            "example": "JPMorgan"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://moneycare.io/en/platform/fund/IE00BMDV7354"
+          },
+          "impactCalculationResult": {
+            "$ref": "#/components/schemas/FundImpactCalculationResultPDTO"
+          },
+          "indicators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IndicatorPDTO"
+            }
+          },
+          "holdings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FundHoldingPDTO"
+            }
+          }
+        }
+      },
+      "CompanyListPDTO": {
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2161
+          },
+          "companies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyPDTO"
+            }
+          }
+        }
+      },
+      "CompanyPDTO": {
+        "required": [
+          "financialAssets",
+          "id",
+          "impactCalculationResult",
+          "indicators",
+          "isin",
+          "mainIsin",
+          "name",
+          "sources"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "dcb34990-7a36-415f-83b0-11a1ef86a016"
+          },
+          "isin": {
+            "type": "string",
+            "example": "US0378331005"
+          },
+          "mainIsin": {
+            "type": "string",
+            "example": "US0378331005"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc."
+          },
+          "countryIso3Code": {
+            "type": "string",
+            "example": "USA"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://moneycare.io/en/platform/company/US0378331005"
+          },
+          "industry": {
+            "type": "string",
+            "example": "Information & Telecommunications"
+          },
+          "impactCalculationResult": {
+            "$ref": "#/components/schemas/CompanyImpactCalculationResultPDTO"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanySourcePDTO"
+            }
+          },
+          "indicators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IndicatorPDTO"
+            }
+          },
+          "financialAssets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinancialAssetPDTO"
+            }
+          }
+        }
+      },
+      "CompanySourcePDTO": {
+        "type": "object",
+        "properties": {
+          "indicatorType": {
+            "$ref": "#/components/schemas/IndicatorType"
+          },
+          "metric": {
+            "type": "string",
+            "example": "Executive board size"
+          },
+          "value": {
+            "type": "string",
+            "example": "4"
+          },
+          "unit": {
+            "type": "string",
+            "example": "people"
+          },
+          "year": {
+            "type": "string",
+            "example": "2025"
+          },
+          "pdfPage": {
+            "type": "string",
+            "example": "35"
+          },
+          "pdfName": {
+            "type": "string",
+            "example": "8edf3cb0-ddfc-49df-8162-b0bcb6d2ed20.pdf"
+          }
+        }
+      },
+      "FinancialAssetPDTO": {
+        "required": [
+          "id",
+          "isin",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "8f1dc080-4c24-11f0-87bb-000d3a48dc0e"
+          },
+          "isin": {
+            "type": "string",
+            "example": "US0378331005"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc "
+          },
+          "type": {
+            "$ref": "#/components/schemas/FinancialAssetType"
+          }
+        }
+      },
+      "FinancialAssetType": {
+        "type": "string",
+        "example": "STOCK",
+        "enum": [
+          "STOCK",
+          "BOND",
+          "CORPORATE_BOND",
+          "GOVERNMENT_BOND",
+          "ENTITLEMENT",
+          "OPTION",
+          "FUTURE",
+          "STRUCTURED_PRODUCT",
+          "REFERENTIAL",
+          "SPOT",
+          "SWAP",
+          "FORWARD",
+          "OTHER",
+          "UNKNOWN"
+        ]
+      },
+      "Industry": {
+        "type": "string",
+        "enum": [
+          "AGRICULTURE_AND_FORESTRY",
+          "MINING_OIL_AND_GAS",
+          "UTILITIES",
+          "CONSTRUCTION",
+          "MANUFACTURING",
+          "WHOLESALE_AND_RETAIL_TRADE",
+          "TRANSPORT_AND_WAREHOUSING",
+          "ACCOMODATION_AND_FOOD_SERVICES",
+          "INFORMATION_AND_TELECOMMUNICATIONS",
+          "FINANCE_AND_INSURANCE",
+          "REAL_ESTATE",
+          "PROFESSIONAL_AND_TECHNICAL_SERVICES",
+          "MANAGEMENT_OF_COMPANIES",
+          "ADMINISTRATIVE_AND_SUPPORT_SERVICES",
+          "EDUCATIONAL_SERVICES",
+          "HEALTH_SERVICES",
+          "ARTS_AND_ENTERTAINMENT_AND_RECREATION",
+          "PUBLIC_ADMINISTRATION_AND_DEFENSE",
+          "WASTE_MANAGEMENT_AND_REMEDIATION",
+          "OTHER_SERVICES"
+        ]
+      },
+      "CompareResultCompanyPDTO": {
+        "type": "object",
+        "properties": {
+          "isin": {
+            "type": "string",
+            "example": "US11778E1064"
+          },
+          "name": {
+            "type": "string",
+            "example": "B3"
+          },
+          "score": {
+            "type": "number",
+            "example": 0.9
+          }
+        }
+      },
+      "CompareResultPDTO": {
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "integer",
+            "format": "int32",
+            "example": 86
+          },
+          "score": {
+            "type": "number",
+            "example": 0.7
+          },
+          "scoreType": {
+            "type": "string",
+            "example": "IMPACT_SCORE",
+            "enum": [
+              "IMPACT_SCORE",
+              "CLIMATE_SCORE",
+              "SOCIETY_SCORE",
+              "GENDER_SCORE"
+            ]
+          },
+          "companies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompareResultCompanyPDTO"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "description": "Authentication using API Key",
+        "name": "X-API-KEY",
+        "in": "header"
+      }
+    }
+  }
+}
