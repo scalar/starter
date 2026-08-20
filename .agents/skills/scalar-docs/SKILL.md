@@ -82,18 +82,17 @@ All navigation is in `navigation.routes`. Each route key is the URL path; the va
 
 ### navigation.header
 
-Links in the top bar. Use `type: "spacer"` to push items before it left and after it right.
+Links in the top bar. Use `align` to place each item: `"start"` (beside the logo), `"center"`, or `"end"`. Omit it and the item sits at the start.
 
 ```json
 "header": [
-  { "type": "link", "title": "Home", "to": "/" },
-  { "type": "spacer" },
-  { "type": "link", "title": "Log in", "to": "https://dashboard.example.com/login", "newTab": true },
-  { "type": "link", "title": "Register", "style": "button", "icon": "phosphor/regular/user-plus", "to": "https://...", "newTab": true }
+  { "type": "link", "title": "Home", "align": "start", "to": "/" },
+  { "type": "link", "title": "Log in", "align": "end", "to": "https://dashboard.example.com/login", "newTab": true },
+  { "type": "link", "title": "Register", "style": "button", "align": "end", "icon": "phosphor/regular/user-plus", "to": "https://...", "newTab": true }
 ]
 ```
 
-Properties: `title`, `type` (`"link"` | `"spacer"`), `to`, `style` (`"button"` | `"link"`), `icon`, `newTab`
+Properties: `title`, `type` (`"link"`), `to`, `align` (`"start"` | `"center"` | `"end"`), `style` (`"button"` | `"link"`), `icon`, `newTab`
 
 ### navigation.sidebar
 
